@@ -3,12 +3,20 @@ import { Accordion, AccordionItem } from 'react-light-accordion';
 import '../assets/Modeller.css';
 
 
+
 	class Modeller extends Component {
-   
+		constructor(props) {
+			super(props);
+			
+		}
+
 	render () {
-		const Content = () => (
-			<span class="element">
-			</span>
+	 const Content = () => (
+					
+			<div draggable class="element">
+				<h1 class="elementimg">A</h1>
+				<p class="elementtitle">azure</p>
+			</div>
 	);
 	return (
 	<div>
@@ -16,7 +24,7 @@ import '../assets/Modeller.css';
 			<div class="topnav-centered">
 				<a href="#home">Build</a>
 			</div>
-				<a >TM</a>
+				<a class="titlelogo">TerraformModeller</a>
 			<div class="topnav-right">
 		</div>
 	</div>
@@ -28,26 +36,40 @@ import '../assets/Modeller.css';
 
 				<AccordionItem title="Providers">
 					<Content/>
+					<Content/>
+					<Content/>
 				</AccordionItem>
 
 				<AccordionItem title="Provisioners">
 					<Content />
+					<Content/>
+					<Content/>
+					<Content/>
+					<Content/>
+					<Content/>
 				</AccordionItem>
 
 				<AccordionItem title="Modules">
+					<Content/>
+					<Content/>
 					<Content/>
 				</AccordionItem>
 
 				<AccordionItem title="Backends">
 					<Content/>
+					<Content/>
+					<Content/>
 				</AccordionItem>
 
 				<AccordionItem title="Plugins">
 					<Content/>	
+					<Content/>
 				</AccordionItem>
 			</Accordion>
 		</div>
 		</div>
+		<section className="dropzone">
+		</section>
 	</div>
 
 		);

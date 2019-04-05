@@ -6,15 +6,8 @@
     overflow: hidden;
     background-color: #4c90ff;
 }
-.title {
-    position: relative;
-    font-family: 'serif';
+.titlelogo {
     font-weight: bold;
-    width: 50px;
-    height:30px;
-    left:5px;
-    text-align: center;
-    color: white;
 }
 .topnav a {
     float: left;
@@ -49,7 +42,7 @@
 
  .sidenav {
     height: 93%;
-    width: 400px;
+    width: 25%;
     position: absolute;
     z-index: -1;
     left: 0px;
@@ -158,3 +151,12 @@
     padding: 5px;
   }
  
+  .dropzone {
+    position: absolute;
+    height: 93%;
+    width: 75%;
+    right: 0;
+    bottom: 0;
+    background-color: #595959;
+    border-left: 1px dotted;
+  }
