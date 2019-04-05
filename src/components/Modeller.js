@@ -1,23 +1,48 @@
 import React, {Component} from 'react';
 import { Accordion, AccordionItem } from 'react-light-accordion';
+import DragDrop from './DragDrop';
 import '../assets/Modeller.css';
 
 
-
 	class Modeller extends Component {
-		constructor(props) {
-			super(props);
-			
-		}
 
 	render () {
-	 const Content = () => (
-					
-			<div draggable class="element">
+		const Content = () => (
+			<div id="p1" draggable="true" ondragstart="onDragstart(e);" class="element" >
 				<h1 class="elementimg">A</h1>
 				<p class="elementtitle">azure</p>
 			</div>
+	
 	);
+
+		const onDragstart = (e) => {
+		// Add the target element's id to the data transfer object
+		e.dataTransfer.setData("text/plain", e.target.id);
+		e.dataTransfer.dropEffect = "move";
+	   	}
+
+		const onDragover = (e)=> {
+		e.preventDefault();
+		// Set the dropEffect to move
+		e.dataTransfer.dropEffect = "move"
+		}
+
+		const	onDragEnter = (e) => {
+			
+			e.stopPropagation();
+		}
+
+		const dragEnd = (e) => {
+			Content.setState({targetbox: null})
+		  }
+
+		const onDrop = (e) => {
+			e.preventDefault();
+			// Get the id of the target and add the moved element to the target's DOM
+			var data = e.dataTransfer.getData("text/plain");
+			e.target.appendChild(document.getElementById(data));
+		   }
+
 	return (
 	<div>
 		<div class="topnav">
@@ -28,50 +53,11 @@ import '../assets/Modeller.css';
 			<div class="topnav-right">
 		</div>
 	</div>
-
-
-	<div class="sidenav">
-		<div>
-			<Accordion atomic={true}>
-
-				<AccordionItem title="Providers">
-					<Content/>
-					<Content/>
-					<Content/>
-				</AccordionItem>
-
-				<AccordionItem title="Provisioners">
-					<Content />
-					<Content/>
-					<Content/>
-					<Content/>
-					<Content/>
-					<Content/>
-				</AccordionItem>
-
-				<AccordionItem title="Modules">
-					<Content/>
-					<Content/>
-					<Content/>
-				</AccordionItem>
-
-				<AccordionItem title="Backends">
-					<Content/>
-					<Content/>
-					<Content/>
-				</AccordionItem>
-
-				<AccordionItem title="Plugins">
-					<Content/>	
-					<Content/>
-				</AccordionItem>
-			</Accordion>
-		</div>
-		</div>
-		<section className="dropzone">
-		</section>
+	return <DragDrop/>
 	</div>
 
+
+	
 		);
 	}
 }

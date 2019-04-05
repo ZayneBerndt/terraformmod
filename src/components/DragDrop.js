@@ -1,26 +1,31 @@
 import React, {Component} from 'react';
+import { Accordion, AccordionItem } from 'react-light-accordion';
+
 import '../assets/DragDrop.css';
+import '../assets/Modeller.css';
 
 export default class DragDrop extends Component {
     state = {
-        tasks: [
-            {name:"Learn Angular",category:"wip", bgcolor: "yellow"},
-            {name:"React", category:"wip", bgcolor:"pink"},
-            {name:"Vue", category:"complete", bgcolor:"skyblue"}
+        providers: [
+            {name:"aws",category:"available", image:"A"},
+            {name:"google", category:"available", image:"G"},
+            {name:"azure", category:"available", image:"A"},
+            {name:"vcenter", category:"available", image:"A"},
+            {name:"cloud", category:"available", image:"C"}
           ]
     }
     onDrop = (e, cat) => {
        let id = e.dataTransfer.getData('id');
-       let tasks = this.state.tasks.filter((task) => {
-        if (task.name == id){
-           task.category = cat;
+       let providers = this.state.providers.filter((provider) => {
+        if (provider.name == id){
+            provider.category = cat;
             }
-            return task;
+            return provider;
 
        })
        this.setState({
            ...this.state, 
-           tasks
+           providers
        })
     }
 
@@ -35,39 +40,69 @@ export default class DragDrop extends Component {
 
 
     render() {
-        var tasks = {
-            wip: [],
-            complete : []
+        var providers = {
+            available: [],
+            selected : []
         }
-        this.state.tasks.forEach((t) => {
-            tasks[t.category].push(
-                <div key={t.name}
-                     onDragStart = {(e) => this.onDragStart(e, t.name)}
+        this.state.providers.forEach((p) => {
+            providers[p.category].push(
+                <div key={p.name}
+                     onDragStart = {(e) => this.onDragStart(e, p.name)}
                      draggable
                      className="draggable"
-                     style={{backgroundColor: t.bgcolor}}>
-                     {t.name}
+                     style={{backgroundColor: p.bgcolor}}>
+                     {p.name}
                      </div>
                      );      
                 });
 
         return (
+            <div>
             <div className="container-drag">
-               <h2 className="header">DragDrop Container</h2> 
+               {/*  
                <div className="wip" 
                     onDragOver={(e)=>this.onDragOver(e)}
-                    onDrop ={(e) => {this.onDrop(e, "wip")}}>
-                    <span className="task-header">WIP</span>
-                        {tasks.wip}
+                    onDrop ={(e) => {this.onDrop(e, "available")}}>
+                    <span className="task-header">AVAILABLE</span>
+                        {providers.available}
                </div>
                <div className="droppable"  onDragOver={(e) => this.onDragOver(e)}
-                    onDrop={(e) => this.onDrop(e, "complete")}>
-                    <span className="task-header">Complete</span>
-                    {tasks.complete}
-               </div>
+                    onDrop={(e) => this.onDrop(e, "selected")}>
+                    <span className="task-header">SELECTED</span>
+                    {providers.selected}
+               </div> */}
+        <div class="sidenav" onDragOver={(e)=>this.onDragOver(e)}
+                    onDrop ={(e) => {this.onDrop(e, "available")}}> >
+			<Accordion atomic={true}>
+				<AccordionItem title="Providers">
+                    {providers.available}
+                    {providers.available}
+				</AccordionItem>
+				<AccordionItem title="Provisioners">
+                     {providers.available}
+                     {providers.available}
+				</AccordionItem>
 
-            </div>
+				<AccordionItem title="Modules">
+                    {providers.available}
+                    {providers.available}
+				</AccordionItem>
+				<AccordionItem title="Backends">
+                    {providers.available}
+                    {providers.available}
+
+				</AccordionItem>
+				<AccordionItem title="Plugins">
+                    {providers.available}
+                    {providers.available}
+
+				</AccordionItem>
+			</Accordion>
+		</div>
+		</div>
+		<div id="target" className="dropzone" onDragOver={(e) => this.onDragOver(e)}
+                    onDrop={(e) => this.onDrop(e, "selected")}>{providers.selected}</div>
+        </div>
         );
     }
 }
-
