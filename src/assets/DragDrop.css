@@ -1,3 +1,12 @@
+:root {
+  --navblue: #4c90ff;
+  --navtext: #f2f2f2;
+  --sidenav: #333;
+  --element: #3E3E3E;
+  --elementtitle: #707070;
+  --dopzone: #595959;
+}
+
 .App {
   text-align: center;
   width: 95%;
@@ -43,10 +52,48 @@
 }
 
 .draggable {
-  width: 100px;
-  height: 100px;
-  background-color: yellow;
-  margin: 5px auto;
-  line-height: 5em;
+  display: inline-block;
+  height: 100px ;
+  width: 130px ; 
+  background-color: var(--element);
+  font-family: serif;
+  text-align: center;
+  cursor: pointer;
+  padding: 5px;
+  margin:5px;
+}
+.draggable:hover{
+  background-color: var(--navblue);
 }
 
+.elementimg {
+  position: relative;
+  height: 20px;
+  padding: 5px;  
+  font-size: 1rem;
+  font-family: serif;
+  color: var(--elementimg);
+}
+
+.elementtitle {
+  display: relative;
+  position:;
+  font-size: 1rem;
+  color: var(--elementtitle);
+  text-align: center;
+  padding: 5px;
+}
+
+.test{
+ position: absolute;
+ color: black;
+ left: 700px;
+ top: 500px;
+ background-color: white;
+ width: 300px;
+ height: 300px;
+}
+
+.elementdetails {
+  color : white;
+}
