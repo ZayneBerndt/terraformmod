@@ -1,84 +1,138 @@
 import React, {Component} from 'react';
 import { Accordion, AccordionItem } from 'react-light-accordion';
+import {Link } from 'react-router-dom';
+import DropDown from '../components/DropDown';
+
+
 
 import '../assets/DragDrop.css';
 import '../assets/Modeller.css';
 
 export default class DragDrop extends Component {
-    state = {
-        providers: [
-            {name:"aws",category:"available", image:"A"},
-            {name:"google", category:"available", image:"G"},
-            {name:"azure", category:"available", image:"A"},
-            {name:"vcenter", category:"available", image:"A"},
-            {name:"cloud", category:"available", image:"C"}
-          ],
-    }
+	
+	state = {
+			providers: {
+					aws: {
+							resources: {
+									aws_vm: {
+											name: "",
+											mem: 0,
+											cpu: 0
+									},
+									aws_lb: {
+											ip_range: ''
+									}} 
+					},
+					google: {
+							resources: {
+									google_vm: {
+											name: "",
+											mem: 0,
+											cpu: 0
+									},
+									google_lb: {
+											ip_range: ''
+									}}
+					},
+					azure: {
+							resources: {
+									azure_vm: {
+											name: "",
+											mem: 0,
+											cpu: 0
+									},
+									azure_lb: {
+											ip_range: ''
+									}
+							}
+					},
+					vcenter: {
+							resources: {
+									vcenter_vm: {
+											name: "",
+											mem: 0,
+											cpu: 0
+									},
+									vcenter_lb: {
+											ip_range: ''
+									}
+							}
+					},
+					cloud: {
+							resources: {}
+					}
+			},
+			selectedProvider: null //aws
+		};
 
-    onDrop = (e, cat) => {
-       let id = e.dataTransfer.getData('id');
-       let providers = this.state.providers.filter((provider) => {
-        if (provider.name == id){
-            provider.category = cat;
-            }
-            return provider;
-       })
-       this.setState({...this.state, providers})
-    }
-    onDragStart = (e, id) => {
-        console.log('dragstart:', id);
-        e.dataTransfer.setData("id", id );
-    }
-    onDragOver = (e) => {
-        e.preventDefault();
-    }
+
+		
+		
+		handleClick(sP){
+			this.setState({selectedProvider: sP}) 
+			console.log({sP})
+			
+		}
+
+
 
     render() {
-        var providers = {
-            available: [],
-            model : []
-        }
-        this.state.providers.forEach((p) => {
-            providers[p.category].push(
-                <div key={p.name}
-                     onDragStart = {(e) => this.onDragStart(e, p.name)}
-                     draggable
-                     className="draggable">
-                     {p.name}
-                     {p.image}
-                     </div>
-                    );      
-                });
+				var myArr = [];
+				// var modArr = [];
+
+        for(let provider in this.state.providers){
+            myArr.push(<div className="draggable" draggable  key={provider} data-provider={provider} onMouseDown={this.handleClick.bind(this, provider)}>{provider}</div>)
+
+            // for(let resource in this.state.providers[provider].resources){
+            //     myArr.push(
+            //         <div>
+            //             <div>{resource}</div>
+            //         </div>)
+            // }
+				}
+
+				
+			
 
         return (
-        <div>
-            <div className="container-drag">
-            <div class="sidenav" onDragOver={(e)=>this.onDragOver(e)}
-                        onDrop ={(e) => {this.onDrop(e, "available")}}> >
-                     <Accordion atomic={true}>
-                    <AccordionItem title="Providers">
-                        {providers.available}
-                    </AccordionItem>
-                    <AccordionItem title="Provisioners">
-                        {providers.available}
-                    </AccordionItem>
-
-                    <AccordionItem title="Modules">
-                        {providers.available}
-                    </AccordionItem>
-                    <AccordionItem title="Backends">
-                        {providers.available}
-                    </AccordionItem>
-                    <AccordionItem title="Plugins">
-                        {providers.available}
-                    </AccordionItem>
-                </Accordion>
+            <React.Fragment>
+							<div className="topnav">
+                        <Link to="/Landing"className="titlelogo">TerraformModeller</Link>
+                        <div className="topnav-right">
+                        </div>
+                    </div>
+                <div>
+                  <DropDown/>
+                </div>
+                <div className="container-drag">
+                <div className="sidenav" > 
+                        <Accordion atomic={true}>
+                        <AccordionItem title="Providers">
+													{myArr}
+                        </AccordionItem>
+                        <AccordionItem title="Provisioners">
+                        </AccordionItem>
+                        <AccordionItem title="Modules">
+                        </AccordionItem>
+                        <AccordionItem title="Variables">
+                        </AccordionItem>
+                        <AccordionItem title="Settings">
+												<div className="meneitems">
+													<h3>Last Plan</h3>
+													<h3>Last Apply</h3>
+													<h3>Delete</h3>
+													<h3>Unlock</h3>
+													<h3>Statefile</h3>
+												</div>
+                        </AccordionItem>
+                    </Accordion>
+										
+                </div>
             </div>
-		</div>
-		<div id="target" className="dropzone" onDragOver={(e) => this.onDragOver(e)}
-            onDrop={(e) => this.onDrop(e, "model")}>{providers.model}</div>
-         
-        </div>
+            <div id="target" className="dropzone" >
+							{/* <div>{myArr}</div> */}
+						</div>
+        </React.Fragment>
         );
     }
 }

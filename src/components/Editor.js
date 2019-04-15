@@ -1,11 +1,9 @@
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import { slide as Menu } from 'react-burger-menu'
-import providerData from '../data/providers';
-import DragDrop from './DragDrop';
+import React from 'react';
+import {slide as Menu } from 'react-burger-menu'
 import AceEditor from 'react-ace';
 import 'brace/mode/golang';
 import 'brace/theme/github';
+import '../assets/Editor.css'
 
 var styles = {
     bmBurgerButton: {
@@ -55,28 +53,30 @@ var styles = {
   }
 }
 
-
-function onChange(newValue) {
-    console.log('change',newValue);
-  }
-
 class Editor extends React.Component {
+
   render () {
-    
-  return (
-  <div>
-    <div id="outer-container" class="menutick">
+    return (
+  <React.Fragment>
+
+    <div id="outer-container" className="menutick">
+
       <Menu right styles={ styles }>
+        <label className="editorToggle">
+          <input  type="radio" value="option1" checked={false} />
+            JSON
+            <input  type="radio" value="option1" checked={true} />
+            JS
+        </label>
         <AceEditor
           mode="golang"
           theme="github"
-          onChange={onChange}
+          // onChange={onChange}
           name="UNIQUE_ID_OF_DIV"
-          editorProps={{$blockScrolling: true}}
-        />
+          editorProps={{$blockScrolling: true}}/>
       </Menu>
       </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
